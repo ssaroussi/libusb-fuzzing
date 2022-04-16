@@ -28,6 +28,9 @@ OS_WINDOWS_SRC = libusb-1.0.def libusb-1.0.rc \
 		 os/windows_common.h os/windows_common.c \
 		 os/windows_usbdk.h os/windows_usbdk.c \
 		 os/windows_winusb.h os/windows_winusb.c
+OS_FUZZER_SRC = os/fuzz_usb.c
+
+
 
 if OS_DARWIN
 OS_SRC = $(OS_DARWIN_SRC)
@@ -78,6 +81,11 @@ all-local: .libs/libusb-1.0.dll.a
 .libs/libusb-1.0.dll.a: libusb-1.0.def libusb-1.0.la
 	$(AM_V_DLLTOOL)$(DLLTOOL) $(DLLTOOLFLAGS) --kill-at --input-def $< --dllname libusb-1.0.dll --output-lib $@
 endif
+
+#if BUILD_FUZZER
+OS_SRC = $(OS_FUZZER_SRC)
+#endif
+
 endif
 
 libusb_1_0_la_LDFLAGS = $(LT_LDFLAGS) $(EXTRA_LDFLAGS)

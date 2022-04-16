@@ -366,6 +366,12 @@ AC_ARG_ENABLE([tests-build],
 	[build_tests=$enableval],
 	[build_tests=no])
 
+dnl Fuzzer build
+AC_ARG_ENABLE([fuzzer-build],
+	[AS_HELP_STRING([--fuzz], [Build for fuzzing [default=yes]])],
+	[build_fuzzer=$enableval],
+	[build_fuzzer=yes])
+
 AM_CONDITIONAL([BUILD_EXAMPLES], [test "x$build_examples" != xno])
 AM_CONDITIONAL([BUILD_TESTS], [test "x$build_tests" != xno])
 AM_CONDITIONAL([BUILD_UMOCKDEV_TEST], [test "x$ac_have_umockdev" = xyes -a "x$log_enabled" != xno])
@@ -381,6 +387,7 @@ AM_CONDITIONAL([OS_WINDOWS], [test "x$backend" = xwindows])
 AM_CONDITIONAL([PLATFORM_POSIX], [test "x$platform" = xposix])
 AM_CONDITIONAL([PLATFORM_WINDOWS], [test "x$platform" = xwindows])
 AM_CONDITIONAL([USE_UDEV], [test "x$use_udev" = xyes])
+AM_CONDITIONAL([BUILD_FUZZER], [test "x$build_fuzzer" != xno])
 
 dnl The -Wcast-function-type warning causes a flurry of warnings when compiling
 dnl Windows with GCC 8 or later because of dynamically loaded functions
